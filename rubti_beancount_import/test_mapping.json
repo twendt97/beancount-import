@@ -1,0 +1,15 @@
+{
+    "Simply juan bravo": {
+        "account": "Expenses:Food:Grocery",
+        "narration": "Supermarket"
+    },
+    "El templo": {
+        "account": "Expenses:Entertainment:Club",
+        "narration": "Salsa club"
+    },
+    "Bar restaurante el nião p": {
+        "account": "Expenses:Entertainment:Bar",
+        "narration": "Previa despues de la clase",
+        "payee": "El niño pastor"
+    }
+}

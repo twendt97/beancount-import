@@ -2,7 +2,7 @@ from os import path
 
 from beancount.ingest import regression_pytest
 
-from importers.sparkasse.giro.giro import SpkGiroImporter
+from rubti_beancount_import.sparkasse.giro.giro import SpkGiroImporter
 
 importer = SpkGiroImporter(
     iban="DE97269513110161869128", account="Assets:DE:SpkCGW:Checking"
