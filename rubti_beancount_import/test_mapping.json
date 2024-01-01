@@ -11,5 +11,26 @@
         "account": "Expenses:Entertainment:Bar",
         "narration": "Previa despues de la clase",
         "payee": "El niño pastor"
+    },
+    "LA GALERIAMADRID       ES": {
+        "account": "Expenses:Food:Restaurant:Breakfast",
+        "payee": "La Galeria Madrid",
+        "narration": "Lovely bar close to the office"
+    },
+    "SIMPLY JUAN BRAVOMADRID       ES": {
+        "account": "Expenses:Food:Grocery",
+        "narration": "Supermarket close to the apartment"
+    },
+    "FRUTERIA RICA FRUITMADRID       ES": {
+        "account": "Expenses:Food:Vegetables"
+    },
+    "ASOCIACION INTERNACIONAL VIA FACIL": {
+        "account": "Expenses:Residence:MADJuanBravo62"
+    },
+    "ZV-Entgelte ": {
+        "account": "Expenses:Fees:SpkCGW"
+    },
+    "Pauschalen ": {
+        "account": "Expenses:Fees:SpkCGW"
     }
 }

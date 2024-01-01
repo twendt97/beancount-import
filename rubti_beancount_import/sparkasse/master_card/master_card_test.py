@@ -6,7 +6,9 @@ from rubti_beancount_import.sparkasse.master_card.master_card import (
     SpkMasterCardImporter,
 )
 
-importer = SpkMasterCardImporter("Liabilities:DE:MasterCard:Silver-4932", "4932")
+importer = SpkMasterCardImporter(
+    "Liabilities:DE:MasterCard:Silver-4932", "4932", account_mapping="test_mapping.json"
+)
 directory = path.dirname(__file__)
 
 

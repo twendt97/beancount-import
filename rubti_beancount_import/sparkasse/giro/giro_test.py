@@ -5,7 +5,9 @@ from beancount.ingest import regression_pytest
 from rubti_beancount_import.sparkasse.giro.giro import SpkGiroImporter
 
 importer = SpkGiroImporter(
-    iban="DE97269513110161869128", account="Assets:DE:SpkCGW:Checking"
+    iban="DE12345678901234567890",
+    account="Assets:DE:SpkCGW:Checking",
+    account_mapping="test_mapping.json",
 )
 
 directory = path.dirname(__file__)
