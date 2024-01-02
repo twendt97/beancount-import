@@ -8,6 +8,8 @@ from pathlib import Path
 from beancount.core import amount, data
 from beancount.ingest.importer import ImporterProtocol
 
+import rubti_beancount_import.utils as utils
+
 DEFAULT_FIELDS = (
     "Umsatz getätigt von",
     "Belegdatum",
@@ -36,6 +38,7 @@ class SpkMasterCardImporter(ImporterProtocol):
     file_encoding: str
     _fields: Sequence[str]
     _txn_infos: dict = {}
+    account_mapper: utils.AccountMapper = None
 
     def __init__(
         self,
@@ -56,10 +59,6 @@ class SpkMasterCardImporter(ImporterProtocol):
             f = open(account_mapping)
             self._txn_infos = json.load(f)
             f.close()
-
-    def _fmt_amount(self, amount: str) -> Decimal:
-        """Removes German thousands separator and converts decimal point to US."""
-        return Decimal(amount.replace(".", "").replace(",", "."))
 
     def name(self) -> str:
         return "Sparkasse MasterCard"
@@ -103,7 +102,7 @@ class SpkMasterCardImporter(ImporterProtocol):
                 ).date()
                 payee = row["Transaktionsbeschreibung"]
                 units = amount.Amount(
-                    self._fmt_amount(row["Buchungsbetrag"]), currency=self.currency
+                    utils.format_amount(row["Buchungsbetrag"]), currency=self.currency
                 )
                 postings = [
                     data.Posting(

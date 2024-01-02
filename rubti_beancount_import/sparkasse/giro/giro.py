@@ -8,6 +8,8 @@ from pathlib import Path
 from beancount.core import amount, data
 from beancount.ingest import importer
 
+import rubti_beancount_import.utils as utils
+
 DEFAULT_FIELDS = (
     "Auftragskonto",
     "Buchungstag",
@@ -58,10 +60,6 @@ class SpkGiroImporter(importer.ImporterProtocol):
             self._txn_infos = json.load(f)
             f.close()
 
-    def _fmt_amount(self, amount: str) -> Decimal:
-        """Removes German thousands separator and converts decimal point to US."""
-        return Decimal(amount.replace(".", "").replace(",", "."))
-
     def identify(self, file):
         if Path(file.name).suffix.lower() != ".csv":
             return False
@@ -88,7 +86,7 @@ class SpkGiroImporter(importer.ImporterProtocol):
                 ).date()
                 payee = row["Beguenstigter/Zahlungspflichtiger"]
                 units = amount.Amount(
-                    self._fmt_amount(row["Betrag"]), currency=self.currency
+                    utils.format_amount(row["Betrag"]), currency=self.currency
                 )
                 postings = [
                     data.Posting(
