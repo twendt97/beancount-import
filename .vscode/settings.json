@@ -1,0 +1,8 @@
+{
+    "python.testing.pytestArgs": [
+        "rubti_beancount_import"
+    ],
+    "python.testing.unittestEnabled": false,
+    "python.testing.pytestEnabled": true,
+    "python.testing.cwd": "${workspaceFolder}/rubti_beancount_import"
+}

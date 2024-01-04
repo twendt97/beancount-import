@@ -33,7 +33,7 @@ class SpkMasterCardImporter(ImporterProtocol):
     currency: str
     _date_format = "%d.%m.%y"
     _file_encoding = "ISO-8859-1"
-    _acc_map: utils.AccountMapper = None
+    _acc_map: utils.AccountMapper
 
     def __init__(
         self,
@@ -91,23 +91,32 @@ class SpkMasterCardImporter(ImporterProtocol):
                 date: datetime = datetime.strptime(
                     row["Buchungsdatum"], self._date_format
                 ).date()
-                payee = row["Transaktionsbeschreibung"]
+                narration = row["Transaktionsbeschreibung"]
                 units = amount.Amount(
                     utils.format_amount(row["Buchungsbetrag"]), currency=self.currency
                 )
                 postings = [utils.create_posting(self.account, units, meta)]
 
-                if self._acc_map.account(payee) is not None:
+                if self._acc_map.known(narration):
                     postings.append(
-                        utils.create_posting(self._acc_map.account(payee), -units, None)
+                        utils.create_posting(
+                            self._acc_map.account(narration), -units, None
+                        )
                     )
+
+                payee = None
+                if self._acc_map.payee(narration):
+                    payee = self._acc_map.payee(narration)
+                if self._acc_map.narration(narration):
+                    narration = self._acc_map.narration(narration)
+
                 entries.append(
                     utils.create_transaction(
                         postings,
                         date,
                         meta,
-                        self._acc_map.new_payee(payee),
-                        self._acc_map.narration(payee),
+                        payee,
+                        narration,
                     )
                 )
         return entries

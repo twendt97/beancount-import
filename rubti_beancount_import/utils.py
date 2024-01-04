@@ -60,25 +60,25 @@ class AccountMapper:
                     f"Format of file {mapping_file} has not been recognized. Make sure it is YAML or JSON"
                 )
 
-    def new_payee(self, payee: str) -> str:
-        if not self._payee_known(payee) or "payee" not in self._mappings[payee]:
-            return payee
+    def payee(self, key: str) -> str:
+        if not self.known(key) or "payee" not in self._mappings[key]:
+            return None
         else:
-            return self._mappings[payee]["payee"]
+            return self._mappings[key]["payee"]
 
-    def account(self, payee: str) -> str | None:
-        if self._payee_known(payee):
-            return self._mappings[payee]["account"]
+    def account(self, key: str) -> str | None:
+        if self.known(key):
+            return self._mappings[key]["account"]
         else:
             return None
 
-    def narration(self, payee: str) -> str:
-        if not self._payee_known(payee) or "narration" not in self._mappings[payee]:
-            return ""
+    def narration(self, key: str) -> str:
+        if not self.known(key) or "narration" not in self._mappings[key]:
+            return None
         else:
-            return self._mappings[payee]["narration"]
+            return self._mappings[key]["narration"]
 
-    def _payee_known(self, payee: str) -> bool:
-        if payee in self._mappings:
+    def known(self, key: str) -> bool:
+        if key in self._mappings:
             return True
         return False

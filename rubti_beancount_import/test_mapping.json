@@ -19,10 +19,12 @@
     },
     "SIMPLY JUAN BRAVOMADRID       ES": {
         "account": "Expenses:Food:Grocery",
-        "narration": "Supermarket close to the apartment"
+        "narration": "Supermarket close to the apartment",
+        "payee": "Simply Juan Bravo"
     },
     "FRUTERIA RICA FRUITMADRID       ES": {
-        "account": "Expenses:Food:Vegetables"
+        "account": "Expenses:Food:Vegetables",
+        "payee": "Fruteria"
     },
     "ASOCIACION INTERNACIONAL VIA FACIL": {
         "account": "Expenses:Residence:MADJuanBravo62"
