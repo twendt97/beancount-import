@@ -29,10 +29,10 @@
     "ASOCIACION INTERNACIONAL VIA FACIL": {
         "account": "Expenses:Residence:MADJuanBravo62"
     },
-    "ZV-Entgelte ": {
+    "ZV-Entgelte": {
         "account": "Expenses:Fees:SpkCGW"
     },
-    "Pauschalen ": {
+    "Pauschalen": {
         "account": "Expenses:Fees:SpkCGW"
     }
 }

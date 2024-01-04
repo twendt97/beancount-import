@@ -86,7 +86,7 @@ class SpkGiroImporter(importer.ImporterProtocol):
                     row["Buchungstag"], self.date_format
                 ).date()
                 payee = row["Beguenstigter/Zahlungspflichtiger"]
-                narration = row["Verwendungszweck"]
+                narration = row["Verwendungszweck"].strip()
                 units = amount.Amount(
                     utils.format_amount(row["Betrag"]), currency=self.currency
                 )

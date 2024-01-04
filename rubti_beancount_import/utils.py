@@ -3,7 +3,6 @@ from decimal import Decimal
 from identify import identify
 import json
 import yaml
-from dataclasses import dataclass
 
 from beancount.core import amount, data, flags
 from datetime import datetime

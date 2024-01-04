@@ -19,7 +19,7 @@ LA GALERIAMADRID       ES:
   narration: Lovely bar close to the office
   payee: La Galeria Madrid
 
-'Pauschalen ':
+Pauschalen:
   account: Expenses:Fees:SpkCGW
 
 SIMPLY JUAN BRAVOMADRID       ES:
@@ -31,6 +31,6 @@ Simply juan bravo:
   account: Expenses:Food:Grocery
   narration: Supermarket
 
-'ZV-Entgelte ':
+ZV-Entgelte:
   account: Expenses:Fees:SpkCGW
 
