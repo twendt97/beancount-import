@@ -49,13 +49,6 @@ class EdenredImporter(ImporterProtocol):
         return "Edenred Ticket"
 
     def identify(self, file) -> bool:
-        """Return true if this importer matches the given file.
-
-        Args:
-          file: A cache.FileMemo instance.
-        Returns:
-          A boolean, true if this importer can handle this file.
-        """
         if Path(file.name).suffix.lower() != ".csv":
             return False
 

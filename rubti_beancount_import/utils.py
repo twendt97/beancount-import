@@ -14,6 +14,7 @@ def format_amount(amount: str) -> Decimal:
 
 
 def create_posting(account: str, units: amount, meta: dict) -> data.Posting:
+    """Create beancount posting with cost price and flag set to None"""
     return data.Posting(
         account=account,
         units=units,
@@ -27,6 +28,7 @@ def create_posting(account: str, units: amount, meta: dict) -> data.Posting:
 def create_transaction(
     postings: list[data.Posting], date: datetime, meta: dict, payee: str, narration: str
 ) -> data.Transaction:
+    """Create beancount transaction with default values for flag tags and links"""
     return data.Transaction(
         meta=meta,
         date=date,
@@ -40,6 +42,8 @@ def create_transaction(
 
 
 class AccountMapper:
+    """Read mapping from specific narration or payee from a yaml or json file and return the details"""
+
     _mappings = {}
 
     def __init__(self, mapping_file: str = None):
