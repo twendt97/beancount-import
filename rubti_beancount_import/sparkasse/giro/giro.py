@@ -39,6 +39,7 @@ class SpkGiroImporter(importer.ImporterProtocol):
     currency: str
     date_format: str
     file_encoding: str
+    _acc_map: utils.AccountMapper
 
     def __init__(
         self,
@@ -55,10 +56,7 @@ class SpkGiroImporter(importer.ImporterProtocol):
         self.date_format = date_format
         self.file_encoding = file_encoding
         self._fields = DEFAULT_FIELDS
-        if account_mapping is not None:
-            f = open(account_mapping)
-            self._txn_infos = json.load(f)
-            f.close()
+        self._acc_map = utils.AccountMapper(account_mapping)
 
     def identify(self, file):
         if Path(file.name).suffix.lower() != ".csv":
@@ -74,7 +72,10 @@ class SpkGiroImporter(importer.ImporterProtocol):
         return header_match and iban_match
 
     def extract(self, file, existing_entries=None):
-        entries = []
+        if existing_entries:
+            entries = existing_entries
+        else:
+            entries = []
         index = 0
         with open(file.name, encoding=self.file_encoding) as f:
             for index, row in enumerate(
@@ -85,48 +86,37 @@ class SpkGiroImporter(importer.ImporterProtocol):
                     row["Buchungstag"], self.date_format
                 ).date()
                 payee = row["Beguenstigter/Zahlungspflichtiger"]
+                narration = row["Verwendungszweck"]
                 units = amount.Amount(
                     utils.format_amount(row["Betrag"]), currency=self.currency
                 )
-                postings = [
-                    data.Posting(
-                        self.account,
-                        units=units,
-                        cost=None,
-                        price=None,
-                        flag=None,
-                        meta=None,
-                    )
-                ]
-                txn_payee = payee
-                narration = row["Verwendungszweck"]
-                if payee in self._txn_infos:
+                postings = [utils.create_posting(self.account, units, meta)]
+
+                if len(payee) > 0:
+                    search_key = payee
+                else:
+                    search_key = narration
+
+                if self._acc_map.known(search_key):
                     postings.append(
-                        data.Posting(
-                            account=self._txn_infos[payee]["account"],
-                            units=-units,
-                            price=None,
-                            flag=None,
-                            meta=None,
-                            cost=None,
+                        utils.create_posting(
+                            self._acc_map.account(search_key), -units, None
                         )
                     )
-                    if "payee" in self._txn_infos[payee]:
-                        txn_payee = self._txn_infos[payee]["payee"]
-                    if "narration" in self._txn_infos[payee]:
-                        narration = self._txn_infos[payee]["narration"]
+                if self._acc_map.payee(search_key):
+                    payee = self._acc_map.payee(search_key)
+                if self._acc_map.narration(search_key):
+                    payee = self._acc_map.narration(search_key)
 
-                txn = data.Transaction(
-                    meta=meta,
-                    date=date,
-                    flag=self.FLAG,
-                    payee=txn_payee,
-                    narration=narration,
-                    tags=data.EMPTY_SET,
-                    links=data.EMPTY_SET,
-                    postings=postings,
+                entries.append(
+                    utils.create_transaction(
+                        postings,
+                        date,
+                        meta,
+                        payee,
+                        narration,
+                    )
                 )
-                entries.append(txn)
         return entries
 
     def file_account(self, file):
