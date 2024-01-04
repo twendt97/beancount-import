@@ -1,11 +1,11 @@
-from pathlib import Path
-from decimal import Decimal
-from identify import identify
 import json
-import yaml
-
-from beancount.core import amount, data, flags
 from datetime import datetime
+from decimal import Decimal
+from pathlib import Path
+
+import yaml
+from beancount.core import amount, data, flags
+from identify import identify
 
 
 def format_amount(amount: str) -> Decimal:

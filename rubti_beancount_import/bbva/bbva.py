@@ -1,4 +1,3 @@
-import json
 from decimal import Decimal
 from pathlib import Path
 
@@ -12,6 +11,8 @@ IGNORE_DESCRIPTION = ("Pago con tarjeta", "Otros")
 
 
 class BBVAImporter(ImporterProtocol):
+    """Beancount importer for Excel sheet for checking accounts from Spanish BBVA bank"""
+
     _expected_header = pd.Index(
         [
             "Unnamed: 0",
@@ -30,8 +31,7 @@ class BBVAImporter(ImporterProtocol):
     account: str
     account_number: str
     currency: str
-    """Header line in Excel file"""
-    _header_line: int = 4
+    _excel_header_line: int = 4
     _acc_map: utils.AccountMapper
 
     def __init__(
@@ -50,17 +50,10 @@ class BBVAImporter(ImporterProtocol):
         return "BBVA Checking"
 
     def identify(self, file) -> bool:
-        """Return true if this importer matches the given file.
-
-        Args:
-          file: A cache.FileMemo instance.
-        Returns:
-          A boolean, true if this importer can handle this file.
-        """
         if Path(file.name).suffix.lower() != ".xlsx":
             return False
         try:
-            raw_content = pd.read_excel(file.name, header=self._header_line)
+            raw_content = pd.read_excel(file.name, header=self._excel_header_line)
         except:
             return False
         return raw_content.columns.equals(self._expected_header)
@@ -72,7 +65,7 @@ class BBVAImporter(ImporterProtocol):
         if existing_entries:
             entries = existing_entries
         entries = []
-        raw_content = pd.read_excel(file.name, header=self._header_line)
+        raw_content = pd.read_excel(file.name, header=self._excel_header_line)
         for ind, row in raw_content.iterrows():
             meta = data.new_metadata(filename=file.name, lineno=row.name)
             units = amount.Amount(
