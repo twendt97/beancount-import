@@ -60,7 +60,7 @@ class AccountMapper:
                     f"Format of file {mapping_file} has not been recognized. Make sure it is YAML or JSON"
                 )
 
-    def payee(self, key: str) -> str:
+    def payee(self, key: str) -> str | None:
         if not self.known(key) or "payee" not in self._mappings[key]:
             return None
         else:
@@ -72,7 +72,7 @@ class AccountMapper:
         else:
             return None
 
-    def narration(self, key: str) -> str:
+    def narration(self, key: str) -> str | None:
         if not self.known(key) or "narration" not in self._mappings[key]:
             return None
         else:
