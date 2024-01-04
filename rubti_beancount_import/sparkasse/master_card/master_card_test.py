@@ -5,7 +5,7 @@ from beancount.ingest import regression_pytest
 from rubti_beancount_import import SpkMasterCardImporter
 
 importer = SpkMasterCardImporter(
-    "Liabilities:DE:MasterCard:Silver-4932", "4932", account_mapping="test_mapping.json"
+    "Liabilities:DE:MasterCard:Silver-4932", "4932", account_mapping="test_mapping.yaml"
 )
 directory = path.dirname(__file__)
 

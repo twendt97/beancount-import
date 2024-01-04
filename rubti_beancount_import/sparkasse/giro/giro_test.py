@@ -7,7 +7,7 @@ from rubti_beancount_import import SpkGiroImporter
 importer = SpkGiroImporter(
     iban="DE12345678901234567890",
     account="Assets:DE:SpkCGW:Checking",
-    account_mapping="test_mapping.json",
+    account_mapping="test_mapping.yaml",
 )
 
 directory = path.dirname(__file__)

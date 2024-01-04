@@ -7,7 +7,7 @@ from rubti_beancount_import import BBVAImporter
 
 directory = path.dirname(__file__)
 importer = BBVAImporter(
-    "Assets:ES:BBVA:Checking", "ES4701825322250205327489", "test_mapping.json"
+    "Assets:ES:BBVA:Checking", "ES4701825322250205327489", "test_mapping.yaml"
 )
 
 
