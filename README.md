@@ -1,3 +1,7 @@
+# Migration
+
+This repository is read-only because it has been migrated to my new GitHub account. See https://github.com/rubti/beancount-import.
+
 # Beancount Importer
 
 This repository contains [beancount](https://beancount.github.io/docs/) importers to automatically import banking data from the following sources:
